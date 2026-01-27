@@ -1,3 +1,5 @@
+const { TemplateContext } = require("next/dist/shared/lib/app-router-context.shared-runtime");
+
 function generate_pswd(baseword){
     // TODO: randomize case
   // TODO: add a number
@@ -22,7 +24,25 @@ const digits = "0123456789";
   const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
   result += randomSymbol;
 
-  return result;
+  return shuffle_string(result);
 }
-const password = generate_pswd("nebula");
-console.log(password);
+
+function shuffle_string(str){
+  const arr = str.split("");
+  for(let i = arr.length - 1; i>0;i--){
+    const j = Math.floor(Math.random() * (i+1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+
+  }
+  return arr.join("");
+}
+const baseword = process.argv[2];
+if(!baseword){
+  console.log("Please provide a baseword as a command line argument.");
+  process.exit(1);
+}
+const password = generate_pswd(baseword);
+console.log(password); 
+// used to print generated password to console for testing
