@@ -38,7 +38,15 @@ function shuffle_string(str){
 }
 
 const baseword = process.argv[2];
-const MIN_LENGTH = 12;
+const index = process.argv.indexOf("--length");
+let MIN_LENGTH = 12
+if(index!=-1)
+{
+  const value = Number(process.argv[index+1]);
+  if(!Number.isNaN(value) && value>0){
+     MIN_LENGTH = value;
+  }
+}
 const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#_$";
 if(!baseword){
   console.log("Please provide a baseword as a command line argument.");
@@ -52,4 +60,5 @@ while(password.length < MIN_LENGTH){
 
 console.log(password); 
 // used to print generated password to console for testing
+
 
