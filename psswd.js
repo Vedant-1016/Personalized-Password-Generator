@@ -1,5 +1,3 @@
-const { TemplateContext } = require("next/dist/shared/lib/app-router-context.shared-runtime");
-
 function generate_pswd(baseword){
     // TODO: randomize case
   // TODO: add a number
@@ -38,11 +36,20 @@ function shuffle_string(str){
   }
   return arr.join("");
 }
+
 const baseword = process.argv[2];
+const MIN_LENGTH = 12;
+const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#_$";
 if(!baseword){
   console.log("Please provide a baseword as a command line argument.");
   process.exit(1);
 }
-const password = generate_pswd(baseword);
+let password = generate_pswd(baseword);
+while(password.length < MIN_LENGTH){
+  const ch = chars[Math.floor(Math.random() * chars.length)];
+  password += ch;
+}
+
 console.log(password); 
 // used to print generated password to console for testing
+
